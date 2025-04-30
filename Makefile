@@ -6,7 +6,7 @@
 #    By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/04/25 12:02:24 by mgaudin          ###   ########.fr        #
+#    Updated: 2025/04/30 12:37:01 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,15 @@ NAME := CUB3d
 SRC := main.c \
        gen_map/gen_map.c \
        gen_map/get_map_intel.c \
+       gen_map/gen_map_error.c \
+       gen_map/intel_utils.c \
+       gen_map/get_map.c \
+       gen_map/flood_fill.c \
+       gen_map/flood_errror.c \
+       gen_map/border_error.c \
+       graphic_init/ft_graphic.c \
        end/ft_end.c \
-	   ray_casting.c \
+       #ray_casting.c \
 
 CC := cc
 
@@ -28,7 +35,7 @@ OBJ := $(addprefix $(OBJDIR)/, $(OBJ))
 
 LIB := lib/libft/libft.a \
        lib/gnl/gnl.a \
-	   mlx_linux/libmlx.a
+	   mlx_linux/libmlx.a \
 
 all : $(LIB) $(OBJ) $(NAME)
 
@@ -37,7 +44,7 @@ $(NAME) : $(OBJ)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c -o $@ $^
 
 $(LIB) :
 	@make bonus -C lib/libft
