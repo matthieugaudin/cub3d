@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:24:18 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/30 12:49:15 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:07:37 by mgaudin          ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUBE3D_H
 # define CUBE3D_H
@@ -25,6 +25,9 @@
 # include "mlx_linux/mlx.h"
 # include "lib/libft/libft.h"
 # include "lib/gnl/get_next_line.h"
+# define PI 3.1415926535
+# define WIDTH 1440
+# define HEIGHT 810
 
 typedef struct	s_data
 {
@@ -66,7 +69,7 @@ typedef struct s_mlx_env
 {
 	void	*mlx;
 	void	*win;
-	t_img	*img;
+	t_img	img;
 	t_data	*data;
 	int		x;
 	int		y;
@@ -83,6 +86,7 @@ void	get_map(t_data *data, char *map_name);
 void	flood_fill(t_data *data);
 void	check_map_border(t_data *data, char **map);
 int	check_all(char *line);
+
 //map_gen_error
 void	empty_texture_reference(char *line, t_data *data);
 void	invalid_reference(t_data *data);
@@ -93,8 +97,15 @@ void	void_in_map(t_data *data);
 void	no_start(t_data *data);
 void	unclosed_map(t_data *data);
 void	splitted_map(t_data *data);
-//mlx_management
-void	ft_graphic(t_data *data);
-//end
+
+// ray casting
+void    init_env(t_mlx_env *env);
+void	handle_events(t_mlx_env *env);
+void	draw_window(t_mlx_env *env);
+void	draw_player(t_mlx_env *env, int player_size);
+void	draw_line(t_mlx_env *env, int xa, int ya, int xb, int yb);
+void	put_pixel(t_img *img, int x, int y, int color);
+
+// memory managment
 void	free_data(t_data **data);
 #endif

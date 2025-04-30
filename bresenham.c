@@ -20,9 +20,9 @@ static void	draw_line_heigh(t_mlx_env *env, int xa, int ya, int xb, int yb)
 	d = 2 * dx - dy;
 	x = xa;
 	i = ya;
-	while (i < yb + 1)
+	while (i++ < yb + 1)
 	{
-		ft_mlx_pixel_put(&env->img, x, i, 0xff0000);
+		put_pixel(&env->img, x, i, 0xff0000);
 		if (d > 0)
 		{
 			x += xi;
@@ -53,9 +53,9 @@ static void	draw_line_low(t_mlx_env *env, int xa, int ya, int xb, int yb)
 	d = 2 * dy - dx;
 	y = ya;
 	i = xa;
-	while (i < xb + 1)
+	while (i++ < xb + 1)
 	{
-		ft_mlx_pixel_put(&env->img, i, y, 0xff0000);
+		put_pixel(&env->img, i, y, 0xff0000);
 		if (d > 0)
 		{
 			y += yi;

@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:43:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/30 12:42:26 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:24:48 by mgaudin          ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "cube3d.h"
 
@@ -37,7 +37,10 @@ t_data	*gen_data(void)
 
 int	main(int ac, char **argv)
 {
-	t_data	*data;
+	(void)ac;
+	(void)argv;
+	t_data		*data;
+	t_mlx_env   env;
 
 	if (ac != 2)
 	{
@@ -46,6 +49,12 @@ int	main(int ac, char **argv)
 	}
 	data = gen_data();
 	gen_map(data, argv[1]);
-	ft_graphic(data);
+	init_env(&env);
+	draw_window(&env);
+	draw_player(&env, 10);
+	draw_line(&env, env.x, env.y, env.x + 550, -HEIGHT);
+	mlx_put_image_to_window(env.mlx, env.win, env.img.img, 0, 0);
+	handle_events(&env);
+	mlx_loop(env.mlx);
 	free_data(&data);
 }
