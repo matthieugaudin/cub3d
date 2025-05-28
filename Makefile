@@ -1,29 +1,42 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+         #
+#    By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/04/30 15:42:56 by mgaudin          ###   ########.fr        #
+#    Updated: 2025/05/26 13:43:57 by ndelhota         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
-NAME := CUB3d 
+NAME := cub3D
 
-SRC := main.c \
-       gen_map/gen_map.c \
-       gen_map/get_map_intel.c \
-       gen_map/gen_map_error.c \
-       gen_map/intel_utils.c \
-       gen_map/get_map.c \
-       gen_map/flood_fill.c \
-       gen_map/flood_errror.c \
-       gen_map/border_error.c \
-       end/ft_end.c \
-       ray_casting.c \
-	   bresenham.c \
+SRC := src/main.c \
+       src/parsing/gen_map.c \
+       src/parsing/get_map_intel.c \
+       src/parsing/gen_map_error.c \
+       src/parsing/intel_utils.c \
+       src/parsing/get_map.c \
+       src/parsing/check_colors.c \
+       src/parsing/flood_fill.c \
+       src/parsing/flood_errror.c \
+       src/parsing/border_error.c \
+       src/parsing/skip_space.c \
+       src/parsing/ft_end.c \
+       src/draw/init_texture.c \
+       src/draw/handle_events.c \
+       src/draw/keyboard_event.c \
+       src/draw/mouse_event.c \
+       src/draw/init_env.c \
+       src/draw/minimap_init.c \
+       src/draw/trim_texture.c \
+       src/draw/put_pixel.c \
+       src/draw/game_loop.c \
+       src/draw/check_events.c \
+       src/draw/handle_rotation.c \
+       src/draw/draw_map.c \
+       src/draw/draw_ray.c \
 
 CC := cc
 
@@ -35,12 +48,15 @@ OBJ := $(addprefix $(OBJDIR)/, $(OBJ))
 
 LIB := lib/libft/libft.a \
        lib/gnl/gnl.a \
-	   mlx_linux/libmlx.a \
+	lib/mlx_linux/libmlx.a \
 
 all : $(LIB) $(OBJ) $(NAME)
 
 $(NAME) : $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) -lm
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) \
+		-Llib/mlx_linux -lmlx_Linux \
+		-L/usr/lib -Ilib/mlx_linux \
+		-lXext -lX11 -lm -lz -o $(NAME)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)
@@ -49,13 +65,13 @@ $(OBJDIR)/%.o: %.c
 $(LIB) :
 	@make bonus -C lib/libft
 	@make -C lib/gnl
-	@make -C mlx_linux
+	@make -C lib/mlx_linux
 
 clean :
 	@rm -rf $(OBJDIR) 
 	@make -C lib/libft clean
 	@make -C lib/gnl clean
-	@make -C mlx_linux clean
+	@make -C lib/mlx_linux clean
 
 fclean : clean 
 	@rm -f $(NAME)
